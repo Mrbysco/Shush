@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "shush:block/filtered_shush_block"
+    }
+  }
+}

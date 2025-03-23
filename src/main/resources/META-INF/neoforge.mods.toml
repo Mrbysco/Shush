@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+issueTrackerURL="https://github.com/Mrbysco/Shush/issues"
+license="MIT"
+
+[[mods]]
+modId="shush"
+version="${file.jarVersion}"
+displayName="Shush"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/shush"
+authors="Mrbysco, ShyNieke"
+description='''
+A mod that adds a simple way to mute nearby sounds
+'''
+[[dependencies.shush]]
+modId="minecraft"
+type="required"
+versionRange="[1.21,1.22)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.shush]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.1,)"
+ordering="NONE"
+side="BOTH"
+[[mixins]]
+config="shush.mixins.json"
