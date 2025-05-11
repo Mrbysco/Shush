@@ -52,7 +52,7 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 		}
 
 		@Override
-		public void render(GuiGraphics guiGraphics, int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean p_194999_5_, float partialTicks) {
+		public void render(GuiGraphics guiGraphics, int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float partialTicks) {
 			String structureName = soundLocation.toString();
 			Component name = Component.literal(structureName);
 			Font font = this.parent.getFontRenderer();

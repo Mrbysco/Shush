@@ -1,5 +1,6 @@
 package com.mrbysco.shush.client.screen;
 
+import com.mrbysco.shush.ShushMod;
 import com.mrbysco.shush.client.screen.widget.SoundListWidget;
 import com.mrbysco.shush.util.ShushData;
 import net.minecraft.ChatFormatting;
@@ -96,13 +97,12 @@ public class ShushScreen extends Screen {
 		}
 		listWidth = Math.max(Math.min(listWidth, width / 3), 200);
 		listWidth += listWidth % numButtons != 0 ? (numButtons - listWidth % numButtons) : 0;
-		int structureWidth = this.width - listWidth - (PADDING * 3);
-		int closeButtonWidth = Math.min(structureWidth, 200);
+		int closeButtonWidth = 196;
 		int y = this.height - 20 - PADDING;
-		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), b -> ShushScreen.this.onClose())
-				.bounds(centerWidth - (closeButtonWidth / 2) + PADDING, y, closeButtonWidth, 20).build());
 
-		y -= 18 + PADDING;
+		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), b -> ShushScreen.this.onClose())
+				.bounds(centerWidth - (closeButtonWidth / 2) + 4, y, closeButtonWidth / 2, 20).build());
+
 		this.addRenderableWidget(this.saveButton = Button.builder(Component.translatable("shush.screen.selection.save"), b -> {
 			if (selected != null) {
 //				PacketDistributor.sendToServer(new SetStructurePayload(usedHand, selected.getStructureLocation()));
@@ -111,32 +111,30 @@ public class ShushScreen extends Screen {
 			if (this.minecraft.player != null && selected != null)
 				this.minecraft.player.sendSystemMessage(Component.translatable("shush.screen.selection.saved").withStyle(ChatFormatting.GOLD));
 			this.onClose();
-		}).bounds(centerWidth - (closeButtonWidth / 2) + PADDING, y, closeButtonWidth, 20).build());
-
-		y -= 18 + PADDING;
-		this.addRenderableWidget(this.insertButton = Button.builder(Component.translatable("shush.screen.selection.select"), (button) -> {
-			selectedSounds.add(selected.getSoundLocation());
-			selected.setSelected(true);
-		}).bounds(centerWidth - (closeButtonWidth / 2) + PADDING, y, closeButtonWidth, 20).build());
+		}).bounds(centerWidth + PADDING + 3, y, closeButtonWidth / 2, 20).build());
 
 		y -= 18 + PADDING;
 		this.addRenderableWidget(this.removeButton = Button.builder(Component.translatable("shush.screen.selection.remove"), (button) -> {
 			selectedSounds.remove(selected.getSoundLocation());
 			selected.setSelected(false);
-		}).bounds(centerWidth - (closeButtonWidth / 2) + PADDING, y, closeButtonWidth, 20).build());
+		}).bounds(centerWidth - (closeButtonWidth / 2) + 4, y, closeButtonWidth / 2, 20).build());
 
-		y -= 14 + PADDING;
+		this.addRenderableWidget(this.insertButton = Button.builder(Component.translatable("shush.screen.selection.select"), (button) -> {
+			selectedSounds.add(selected.getSoundLocation());
+			selected.setSelected(true);
+		}).bounds(centerWidth + PADDING + 3, y, closeButtonWidth / 2, 20).build());
+
+		y -= 12 + PADDING;
 		search = new EditBox(getFontRenderer(), centerWidth - listWidth / 2 + PADDING + 1, y, listWidth - 2, 14,
 				Component.translatable("shush.screen.search"));
+		search.setFocused(false);
+		search.setCanLoseFocus(true);
+		addWidget(search);
 
 		int fullButtonHeight = PADDING + 20 + PADDING;
 		this.soundsWidget = new SoundListWidget(this, width, fullButtonHeight, search.getY() - getFontRenderer().lineHeight - PADDING);
 		this.soundsWidget.setX(0);
-
-		addWidget(search);
 		addWidget(soundsWidget);
-		search.setFocused(false);
-		search.setCanLoseFocus(true);
 
 		final int width = listWidth / numButtons;
 		int x = centerWidth + PADDING - width;
@@ -211,6 +209,8 @@ public class ShushScreen extends Screen {
 				search.getY() - getFontRenderer().lineHeight - 2, 0xFFFFFF);
 
 		this.search.render(guiGraphics, mouseX, mouseY, partialTicks);
+
+		ShushMod.LOGGER.info("{} {}", this.search.getX(), this.search.getY());
 	}
 
 	@Override
