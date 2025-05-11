@@ -3,6 +3,7 @@ package com.mrbysco.shush;
 import com.mojang.logging.LogUtils;
 import com.mrbysco.shush.client.ClientHandler;
 import com.mrbysco.shush.client.SoundHandler;
+import com.mrbysco.shush.network.PacketHandler;
 import com.mrbysco.shush.registry.ShushRegistry;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
@@ -22,6 +23,8 @@ public class ShushMod {
 		ShushRegistry.BLOCK_ENTITY_TYPES.register(eventBus);
 		ShushRegistry.ITEMS.register(eventBus);
 		ShushRegistry.CREATIVE_MODE_TABS.register(eventBus);
+
+		eventBus.addListener(PacketHandler::setupPackets);
 
 		if (dist.isClient()) {
 			NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, SoundHandler::onSoundEvent);

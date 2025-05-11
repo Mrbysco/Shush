@@ -27,14 +27,14 @@ public class SoundHandler {
 			final Player player = mc.player;
 			final Level level = mc.level;
 			if (player != null && level != null && abstractSoundInstance.volume > 0) {
-				int shushCount = ShushCache.shushCount(level.dimension(), player.blockPosition(), 32);
-				if (shushCount > 0) {
+				float shushedBy = ShushCache.getShushedBy(level.dimension(), player.blockPosition(), abstractSoundInstance, 32);
+				if (shushedBy > 0) {
 					float oldVolume = abstractSoundInstance.volume;
 					// Get shush percentage modifier, 10% per shush block
-					float shushPercentage = 1.0F - (0.1F * shushCount);
+					float shushPercentage = Math.max(0.0F, 1.0F - shushedBy);
 					// Set the volume to the shush percentage
 					abstractSoundInstance.volume = oldVolume * shushPercentage;
-//					ShushMod.LOGGER.info("{} {}", oldVolume, abstractSoundInstance.volume);
+					ShushMod.LOGGER.info("{} {}", oldVolume, abstractSoundInstance.volume);
 					return abstractSoundInstance;
 				}
 			}

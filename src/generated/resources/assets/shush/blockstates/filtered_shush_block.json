@@ -1,7 +1,34 @@
 {
   "variants": {
-    "": {
-      "model": "shush:block/filtered_shush_block"
+    "source=ambient": {
+      "model": "shush:block/filtered_shush_block_ambient"
+    },
+    "source=block": {
+      "model": "shush:block/filtered_shush_block_block"
+    },
+    "source=hostile": {
+      "model": "shush:block/filtered_shush_block_hostile"
+    },
+    "source=master": {
+      "model": "shush:block/filtered_shush_block_master"
+    },
+    "source=music": {
+      "model": "shush:block/filtered_shush_block_music"
+    },
+    "source=neutral": {
+      "model": "shush:block/filtered_shush_block_neutral"
+    },
+    "source=player": {
+      "model": "shush:block/filtered_shush_block_player"
+    },
+    "source=record": {
+      "model": "shush:block/filtered_shush_block_record"
+    },
+    "source=voice": {
+      "model": "shush:block/filtered_shush_block_voice"
+    },
+    "source=weather": {
+      "model": "shush:block/filtered_shush_block_weather"
     }
   }
 }

@@ -2,5 +2,13 @@
   "block.shush.advanced_shush_block": "Advanced Shush Block",
   "block.shush.filtered_shush_block": "Filtered Shush Block",
   "block.shush.shush_block": "Shush Block",
-  "itemGroup.shush": "Shush"
+  "itemGroup.shush": "Shush",
+  "shush.advanced.screen": "Advanced Shush Block",
+  "shush.screen.search": "Search",
+  "shush.screen.search.a_to_z": "A-Z",
+  "shush.screen.search.z_to_a": "Z-A",
+  "shush.screen.selection.remove": "Un-select",
+  "shush.screen.selection.save": "Save selection",
+  "shush.screen.selection.saved": "Selection saved",
+  "shush.screen.selection.select": "Select"
 }
