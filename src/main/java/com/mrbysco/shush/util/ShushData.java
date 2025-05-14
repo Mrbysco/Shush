@@ -39,8 +39,9 @@ public record ShushData(float shushAmount, List<SoundEvent> filteredSounds) {
 			float shushAmount = shushTag.getFloat("shushAmount");
 
 			List<SoundEvent> sounds = new ArrayList<>();
-			if (shushTag.contains("filteredSounds")) {
-				shushTag.getList("filteredSounds", Tag.TAG_STRING).forEach(soundTag -> {
+			ListTag soundList = shushTag.getList("filteredSounds", Tag.TAG_COMPOUND);
+			if (!soundList.isEmpty()) {
+				soundList.forEach(soundTag -> {
 					if (soundTag instanceof CompoundTag soundCompound) {
 						ResourceLocation location = ResourceLocation.tryParse(soundCompound.getString("sound"));
 						if (location != null) {

@@ -4,8 +4,12 @@ import com.mrbysco.shush.client.ShushCache;
 import com.mrbysco.shush.registry.ShushRegistry;
 import com.mrbysco.shush.util.ShushData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,9 +45,7 @@ public class ShushBlockEntity extends BlockEntity {
 	@Override
 	protected void loadAdditional(@NotNull CompoundTag tag, @NotNull Provider registries) {
 		super.loadAdditional(tag, registries);
-		if (tag.contains("shushType")) {
-			this.shushData = ShushData.dataFromTag(tag.getCompound("shushType"));
-		}
+		this.shushData = ShushData.dataFromTag(tag);
 	}
 
 	@Override
@@ -52,6 +54,37 @@ public class ShushBlockEntity extends BlockEntity {
 		if (this.shushData != null) {
 			this.shushData.save(tag);
 		}
+	}
+
+	@Override
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+		CompoundTag compoundNBT = pkt.getTag();
+		handleUpdateTag(compoundNBT, lookupProvider);
+	}
+
+	@Override
+	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+		super.handleUpdateTag(tag, lookupProvider);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
+		CompoundTag nbt = new CompoundTag();
+		this.saveAdditional(nbt, lookupProvider);
+		return nbt;
+	}
+
+	@Override
+	public CompoundTag getPersistentData() {
+		CompoundTag nbt = new CompoundTag();
+		this.saveAdditional(nbt, level != null ? level.registryAccess() : VanillaRegistries.createLookup());
+		return nbt;
+	}
+
+	@Nullable
+	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	/**

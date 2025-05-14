@@ -1,7 +1,7 @@
 package com.mrbysco.shush.client.screen;
 
-import com.mrbysco.shush.ShushMod;
 import com.mrbysco.shush.client.screen.widget.SoundListWidget;
+import com.mrbysco.shush.network.message.SetShushPayload;
 import com.mrbysco.shush.util.ShushData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -16,6 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.StringUtils;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class ShushScreen extends Screen {
 
 		this.addRenderableWidget(this.saveButton = Button.builder(Component.translatable("shush.screen.selection.save"), b -> {
 			if (selected != null) {
-//				PacketDistributor.sendToServer(new SetStructurePayload(usedHand, selected.getStructureLocation()));
+				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds));
 			}
 
 			if (this.minecraft.player != null && selected != null)
@@ -209,8 +210,6 @@ public class ShushScreen extends Screen {
 				search.getY() - getFontRenderer().lineHeight - 2, 0xFFFFFF);
 
 		this.search.render(guiGraphics, mouseX, mouseY, partialTicks);
-
-		ShushMod.LOGGER.info("{} {}", this.search.getX(), this.search.getY());
 	}
 
 	@Override
