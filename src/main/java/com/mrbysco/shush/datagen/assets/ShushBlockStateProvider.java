@@ -2,7 +2,6 @@ package com.mrbysco.shush.datagen.assets;
 
 import com.mrbysco.shush.ShushMod;
 import com.mrbysco.shush.block.FilteredShushBlock;
-import com.mrbysco.shush.block.ShushBlock;
 import com.mrbysco.shush.registry.ShushRegistry;
 import com.mrbysco.shush.util.SourceType;
 import net.minecraft.data.PackOutput;

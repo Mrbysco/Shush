@@ -3,7 +3,6 @@ package com.mrbysco.shush.datagen.assets;
 import com.mrbysco.shush.ShushMod;
 import com.mrbysco.shush.registry.ShushRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class ShushLanguageProvider extends LanguageProvider {

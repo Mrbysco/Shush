@@ -1,6 +1,5 @@
 package com.mrbysco.shush.client;
 
-import com.mrbysco.shush.ShushMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
