@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "shush:block/template_shush_block",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "all": "shush:block/shush_block"
+    "base": "minecraft:block/white_wool"
   }
 }

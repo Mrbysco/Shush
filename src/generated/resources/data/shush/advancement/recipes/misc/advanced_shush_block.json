@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_filtered_shush_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "shush:filtered_shush_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "shush:advanced_shush_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_filtered_shush_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "shush:advanced_shush_block"
+    ]
+  }
+}

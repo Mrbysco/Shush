@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "N": {
+      "item": "minecraft:paper"
+    },
+    "W": {
+      "item": "shush:shush_block"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WNW",
+    "WWW"
+  ],
+  "result": {
+    "count": 8,
+    "id": "shush:filtered_shush_block"
+  }
+}
