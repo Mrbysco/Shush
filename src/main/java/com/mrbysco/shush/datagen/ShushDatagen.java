@@ -3,6 +3,7 @@ package com.mrbysco.shush.datagen;
 import com.mrbysco.shush.datagen.assets.ShushBlockStateProvider;
 import com.mrbysco.shush.datagen.assets.ShushItemModelProvider;
 import com.mrbysco.shush.datagen.assets.ShushLanguageProvider;
+import com.mrbysco.shush.datagen.data.ShushRecipeProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -23,7 +24,7 @@ public class ShushDatagen {
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-
+			generator.addProvider(true, new ShushRecipeProvider(packOutput, lookupProvider));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(true, new ShushLanguageProvider(packOutput));
