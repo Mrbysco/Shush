@@ -29,11 +29,11 @@ public class ShushRegistry {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ShushMod.MOD_ID);
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ShushMod.MOD_ID);
 
-	public static final DeferredBlock<Block> SHUSH_BLOCK = BLOCKS.registerBlock("shush_block", (properties) -> new ShushBlock(
+	public static final DeferredBlock<ShushBlock> SHUSH_BLOCK = BLOCKS.registerBlock("shush_block", (properties) -> new ShushBlock(
 			properties.mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.GUITAR).strength(0.8F).sound(SoundType.WOOL)));
 	public static final DeferredBlock<FilteredShushBlock> FILTERED_SHUSH_BLOCK = BLOCKS.registerBlock("filtered_shush_block", (properties) -> new FilteredShushBlock(
 			properties.mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.GUITAR).strength(0.8F).sound(SoundType.WOOL)));
-	public static final DeferredBlock<Block> ADVANCED_SHUSH_BLOCK = BLOCKS.registerBlock("advanced_shush_block", (properties) -> new AdvancedShushBlock(
+	public static final DeferredBlock<AdvancedShushBlock> ADVANCED_SHUSH_BLOCK = BLOCKS.registerBlock("advanced_shush_block", (properties) -> new AdvancedShushBlock(
 			properties.mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.GUITAR).strength(0.8F).sound(SoundType.WOOL)));
 	public static final DeferredItem<BlockItem> SHUSH_ITEM = ITEMS.registerSimpleBlockItem(SHUSH_BLOCK);
 	public static final DeferredItem<BlockItem> FILTERED_SHUSH_ITEM = ITEMS.registerSimpleBlockItem(FILTERED_SHUSH_BLOCK);

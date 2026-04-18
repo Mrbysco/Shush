@@ -14,7 +14,7 @@ public class ShushItemModelProvider extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		withExistingParent(ShushRegistry.SHUSH_ITEM.getId().getPath(), modLoc(BLOCK_FOLDER + "/" + ShushRegistry.SHUSH_ITEM.getId().getPath()));
-		withExistingParent(ShushRegistry.FILTERED_SHUSH_ITEM.getId().getPath(), modLoc(BLOCK_FOLDER + "/" + ShushRegistry.FILTERED_SHUSH_ITEM.getId().getPath()));
+		withExistingParent(ShushRegistry.FILTERED_SHUSH_ITEM.getId().getPath(), modLoc(BLOCK_FOLDER + "/" + ShushRegistry.FILTERED_SHUSH_ITEM.getId().getPath() + "_master"));
 		withExistingParent(ShushRegistry.ADVANCED_SHUSH_ITEM.getId().getPath(), modLoc(BLOCK_FOLDER + "/" + ShushRegistry.ADVANCED_SHUSH_ITEM.getId().getPath()));
 	}
 }
