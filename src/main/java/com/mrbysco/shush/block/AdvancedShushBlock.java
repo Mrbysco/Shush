@@ -18,14 +18,14 @@ public class AdvancedShushBlock extends ShushBlock {
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (level.getBlockEntity(pos) instanceof ShushBlockEntity blockEntity) {
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				GlobalPos globalPos = GlobalPos.of(level.dimension(), pos);
 				com.mrbysco.shush.client.screen.ShushScreen.openScreen(
 						globalPos, blockEntity.getShushType()
 				);
 			}
 
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 
 		return super.useWithoutItem(state, level, pos, player, hitResult);

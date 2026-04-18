@@ -117,6 +117,10 @@ public class ShushCache {
 	public static void removeShushBlock(Level level, BlockPos pos) {
 		GlobalPos globalPos = GlobalPos.of(level.dimension(), pos);
 		SHUSH_LIST.remove(globalPos);
+	}
+
+	public static void removeShushBlock(GlobalPos globalPos) {
+		SHUSH_LIST.remove(globalPos);
 		FILTERED_SHUSH_MAP.remove(globalPos);
 		ADVANCED_SHUSH_MAP.remove(globalPos);
 	}

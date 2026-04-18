@@ -1,7 +1,7 @@
 {
   "parent": "shush:block/template_shush_block",
-  "render_type": "minecraft:cutout",
   "textures": {
+    "type": "shush:block/type_master",
     "base": "minecraft:block/black_wool"
   }
 }

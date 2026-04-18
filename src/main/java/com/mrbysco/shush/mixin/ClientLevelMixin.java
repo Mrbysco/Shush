@@ -15,11 +15,27 @@ public class ClientLevelMixin {
 			method = "playLocalSound(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)V"
+					target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)Lnet/minecraft/client/sounds/SoundEngine$PlayResult;"
 			),
 			index = 0
 	)
 	private SoundInstance shush$modifyVolume(SoundInstance sound) {
+		SoundInstance adjustedSound = SoundHandler.getAdjustedVolume(sound);
+		if (adjustedSound != null) {
+			return adjustedSound;
+		}
+		return sound;
+	}
+
+	@ModifyArg(
+			method = "playPlayerSound(Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)Lnet/minecraft/client/sounds/SoundEngine$PlayResult;"
+			),
+			index = 0
+	)
+	private SoundInstance shush$modifyVolume2(SoundInstance sound) {
 		SoundInstance adjustedSound = SoundHandler.getAdjustedVolume(sound);
 		if (adjustedSound != null) {
 			return adjustedSound;
@@ -35,6 +51,22 @@ public class ClientLevelMixin {
 			index = 0
 	)
 	private SoundInstance shush$playSound(SoundInstance sound, @Local SimpleSoundInstance soundInstance) {
+		SoundInstance adjustedSound = SoundHandler.getAdjustedVolume(sound);
+		if (adjustedSound != null) {
+			return adjustedSound;
+		}
+		return sound;
+	}
+
+
+	@ModifyArg(method = "playSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZJ)V",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)Lnet/minecraft/client/sounds/SoundEngine$PlayResult;"
+			),
+			index = 0
+	)
+	private SoundInstance shush$playSound2(SoundInstance sound, @Local SimpleSoundInstance soundInstance) {
 		SoundInstance adjustedSound = SoundHandler.getAdjustedVolume(sound);
 		if (adjustedSound != null) {
 			return adjustedSound;

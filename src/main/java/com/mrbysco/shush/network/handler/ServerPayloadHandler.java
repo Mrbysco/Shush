@@ -23,7 +23,7 @@ public class ServerPayloadHandler {
 		context.enqueueWork(() -> {
 					Player player = context.player();
 					if (player instanceof ServerPlayer serverPlayer) {
-						ServerLevel level = serverPlayer.serverLevel();
+						ServerLevel level = serverPlayer.level();
 						GlobalPos globalPos = payload.globalPos();
 						BlockPos pos = globalPos.pos();
 						if (level.dimension().equals(globalPos.dimension()) && level.isLoaded(pos)) {

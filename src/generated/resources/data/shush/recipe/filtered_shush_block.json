@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "N": {
-      "item": "minecraft:paper"
-    },
-    "W": {
-      "item": "shush:shush_block"
-    }
+    "N": "minecraft:paper",
+    "W": "shush:shush_block"
   },
   "pattern": [
     "WWW",

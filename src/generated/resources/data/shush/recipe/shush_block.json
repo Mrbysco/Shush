@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "N": {
-      "item": "minecraft:note_block"
-    },
-    "W": {
-      "tag": "minecraft:wool"
-    }
+    "N": "minecraft:note_block",
+    "W": "#minecraft:wool"
   },
   "pattern": [
     "WWW",

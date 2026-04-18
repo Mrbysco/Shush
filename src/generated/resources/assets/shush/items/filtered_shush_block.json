@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "shush:block/filtered_shush_block_ambient"
+  }
+}

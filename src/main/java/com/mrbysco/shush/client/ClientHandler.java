@@ -14,7 +14,7 @@ public class ClientHandler {
 	public static void onLevelTick(PlayerTickEvent.Post event) {
 		Player player = event.getEntity();
 		Level level = player.level();
-		if (!level.isClientSide) return;
+		if (!level.isClientSide()) return;
 
 		if (level.getGameTime() % level.tickRateManager().tickrate() == 0) {
 			ShushCache.pruneMap(level, player.blockPosition(), 64);

@@ -3,12 +3,13 @@ package com.mrbysco.shush.client.screen.widget;
 import com.mrbysco.shush.client.screen.ShushScreen;
 import com.mrbysco.shush.client.screen.widget.SoundListWidget.ListEntry;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 	}
 
 	@Override
-	protected int getScrollbarPosition() {
+	protected int scrollBarX() {
 		return this.listWidth;
 	}
 
@@ -34,42 +35,46 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 		return this.listWidth;
 	}
 
-	public void refreshList(@Nullable List<ResourceLocation> selected) {
+	public void refreshList(@Nullable List<Identifier> selected) {
 		this.clearEntries();
 		boolean skipCheck = selected == null || selected.isEmpty();
 		parent.buildSoundList(this::addEntry, location -> new ListEntry(location, this.parent, !skipCheck && selected.contains(location)));
 	}
 
 	public class ListEntry extends Entry<ListEntry> {
-		private final ResourceLocation soundLocation;
+		private final Identifier soundLocation;
 		private final ShushScreen parent;
 		private boolean selected;
 
-		ListEntry(ResourceLocation location, ShushScreen parent, boolean selected) {
+		ListEntry(Identifier location, ShushScreen parent, boolean selected) {
 			this.soundLocation = location;
 			this.parent = parent;
 			this.selected = selected;
 		}
 
 		@Override
-		public void render(GuiGraphics guiGraphics, int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float partialTicks) {
+		public void extractContent(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean hovered, float a) {
 			String structureName = soundLocation.toString();
 			Component name = Component.literal(structureName);
 			Font font = this.parent.getFontRenderer();
-			guiGraphics.drawString(font, Language.getInstance().getVisualOrder(FormattedText.composite(font.substrByWidth(name, listWidth))),
+			int left = getContentX();
+			int top = getContentY();
+			int entryWidth = getWidth();
+			int entryHeight = getHeight();
+			graphics.text(font, Language.getInstance().getVisualOrder(FormattedText.composite(font.substrByWidth(name, listWidth))),
 					(this.parent.width / 2) - (font.width(structureName) / 2) + 3, top + 6, 0xFFFFFF, false);
 			if (this.selected)
-				guiGraphics.fill(left, top, left + entryWidth, top + entryHeight, 0x80FFFFFF);
+				graphics.fill(left, top, left + entryWidth, top + entryHeight, 0x80FFFFFF);
 		}
 
 		@Override
-		public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+		public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
 			parent.setSelected(this);
 			SoundListWidget.this.setSelected(this);
 			return false;
 		}
 
-		public ResourceLocation getSoundLocation() {
+		public Identifier getSoundLocation() {
 			return soundLocation;
 		}
 

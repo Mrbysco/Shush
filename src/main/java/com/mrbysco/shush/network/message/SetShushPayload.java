@@ -7,7 +7,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public record SetShushPayload(GlobalPos globalPos,
 	);
 	public static final Type<SetShushPayload> ID = new Type<>(ShushMod.modLoc("set_shush_data"));
 
-	private static List<SoundEvent> getSounds(List<ResourceLocation> soundIds) {
+	private static List<SoundEvent> getSounds(List<Identifier> soundIds) {
 		return soundIds.stream()
 				.map(BuiltInRegistries.SOUND_EVENT::getOptional)
 				.filter(Optional::isPresent)
@@ -30,7 +30,7 @@ public record SetShushPayload(GlobalPos globalPos,
 				.toList();
 	}
 
-	public SetShushPayload(GlobalPos pos, List<ResourceLocation> soundIds, float shushAmount) {
+	public SetShushPayload(GlobalPos pos, List<Identifier> soundIds, float shushAmount) {
 		this(pos, new ShushData(shushAmount, getSounds(soundIds)));
 	}
 

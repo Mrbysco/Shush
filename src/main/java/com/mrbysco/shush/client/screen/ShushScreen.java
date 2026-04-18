@@ -6,19 +6,20 @@ import com.mrbysco.shush.util.ShushData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.neoforged.fml.loading.StringUtils;
 import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -49,8 +50,8 @@ public class ShushScreen extends Screen {
 	private SoundListWidget soundsWidget;
 	private SoundListWidget.ListEntry selected = null;
 	private int listWidth;
-	private List<ResourceLocation> soundIds;
-	private final List<ResourceLocation> unsortedSoundIds;
+	private List<Identifier> soundIds;
+	private final List<Identifier> unsortedSoundIds;
 	private Button insertButton;
 	private Button removeButton;
 	private Button saveButton;
@@ -65,20 +66,20 @@ public class ShushScreen extends Screen {
 
 	private ExtendedSlider shushSlider;
 	private float shushAmount = 0.0F;
-	private final List<ResourceLocation> selectedSounds = new ArrayList<>();
+	private final List<Identifier> selectedSounds = new ArrayList<>();
 
-	public ShushScreen(GlobalPos pos, @Nullable ShushData data, List<ResourceLocation> sounds) {
+	public ShushScreen(GlobalPos pos, @Nullable ShushData data, List<Identifier> sounds) {
 		super(Component.translatable("shush.advanced.screen"));
 		this.globalPos = pos;
 
-		List<ResourceLocation> selectedSounds = new ArrayList<>();
+		List<Identifier> selectedSounds = new ArrayList<>();
 		if (data != null) {
-			data.filteredSounds().forEach(sound -> selectedSounds.add(sound.getLocation()));
+			data.filteredSounds().forEach(sound -> selectedSounds.add(sound.location()));
 			this.shushAmount = data.shushAmount();
 		}
 		this.selectedSounds.addAll(selectedSounds);
 
-		List<ResourceLocation> soundList = new ArrayList<>(sounds);
+		List<Identifier> soundList = new ArrayList<>(sounds);
 		Collections.sort(soundList);
 		this.soundIds = Collections.unmodifiableList(soundList);
 		this.unsortedSoundIds = Collections.unmodifiableList(sounds);
@@ -96,7 +97,7 @@ public class ShushScreen extends Screen {
 	@Override
 	protected void init() {
 		int centerWidth = this.width / 2;
-		for (ResourceLocation structureLocation : soundIds) {
+		for (Identifier structureLocation : soundIds) {
 			listWidth = Math.max(listWidth, getFontRenderer().width(structureLocation.toString()) + 10);
 		}
 		listWidth = Math.max(Math.min(listWidth, width / 3), 200);
@@ -111,7 +112,7 @@ public class ShushScreen extends Screen {
 			if (selected != null) {
 				int percentage = shushSlider.getValueInt();
 				float shush = percentage / 100.0F;
-				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp(shush, 0.1F, 1.0F)));
+				ClientPacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp(shush, 0.1F, 1.0F)));
 			}
 
 			if (this.minecraft.player != null && selected != null)
@@ -183,7 +184,7 @@ public class ShushScreen extends Screen {
 		}
 	}
 
-	public <T extends ObjectSelectionList.Entry<T>> void buildSoundList(Consumer<T> ListViewConsumer, Function<ResourceLocation, T> newEntry) {
+	public <T extends ObjectSelectionList.Entry<T>> void buildSoundList(Consumer<T> ListViewConsumer, Function<Identifier, T> newEntry) {
 		soundIds.forEach(mod -> ListViewConsumer.accept(newEntry.apply(mod)));
 	}
 
@@ -210,20 +211,15 @@ public class ShushScreen extends Screen {
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
-		this.soundsWidget.render(guiGraphics, mouseX, mouseY, partialTicks);
+	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+		super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
+		this.soundsWidget.extractRenderState(graphics, mouseX, mouseY, partialTicks);
 
 		Component text = Component.translatable("shush.screen.search");
-		guiGraphics.drawCenteredString(getFontRenderer(), text, this.width / 2 + PADDING,
+		graphics.centeredText(getFontRenderer(), text, this.width / 2 + PADDING,
 				search.getY() - getFontRenderer().lineHeight - 2, 0xFFFFFF);
 
-		this.search.render(guiGraphics, mouseX, mouseY, partialTicks);
-	}
-
-	@Override
-	public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+		this.search.extractRenderState(graphics, mouseX, mouseY, partialTicks);
 	}
 
 	public Font getFontRenderer() {
@@ -234,28 +230,29 @@ public class ShushScreen extends Screen {
 		this.selected = entry == this.selected ? null : entry;
 	}
 
-	public List<ResourceLocation> getSelectedSounds() {
+	public List<Identifier> getSelectedSounds() {
 		return selectedSounds;
 	}
+
 
 	/**
 	 * Clear the search field when right-clicked on it
 	 */
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		boolean flag = super.mouseClicked(mouseX, mouseY, button);
-		if (button == 1 && search.isMouseOver(mouseX, mouseY)) {
+	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+		boolean flag = super.mouseClicked(event, doubleClick);
+		if (event.button() == 1 && search.isMouseOver(event.x(), event.y())) {
 			search.setValue("");
 		}
 		return flag;
 	}
 
 	@Override
-	public void resize(Minecraft mc, int width, int height) {
+	public void resize(int width, int height) {
 		String s = this.search.getValue();
 		SortType sort = this.sortType;
 		SoundListWidget.ListEntry selected = this.selected;
-		this.init(mc, width, height);
+		this.init(width, height);
 		this.search.setValue(s);
 		this.selected = selected;
 		if (!this.search.getValue().isEmpty())

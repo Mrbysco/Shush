@@ -38,8 +38,8 @@ public class ShushRegistry {
 	public static final DeferredItem<BlockItem> FILTERED_SHUSH_ITEM = ITEMS.registerSimpleBlockItem(FILTERED_SHUSH_BLOCK);
 	public static final DeferredItem<BlockItem> ADVANCED_SHUSH_ITEM = ITEMS.registerSimpleBlockItem(ADVANCED_SHUSH_BLOCK);
 
-	public static final Supplier<BlockEntityType<ShushBlockEntity>> SHUSH_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("shush_block_entity", () -> BlockEntityType.Builder.of(
-			ShushBlockEntity::new, ShushRegistry.SHUSH_BLOCK.get(), ShushRegistry.FILTERED_SHUSH_BLOCK.get(), ShushRegistry.ADVANCED_SHUSH_BLOCK.get()).build(null));
+	public static final Supplier<BlockEntityType<ShushBlockEntity>> SHUSH_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("shush_block_entity", () -> new BlockEntityType<>(
+			ShushBlockEntity::new, ShushRegistry.SHUSH_BLOCK.get(), ShushRegistry.FILTERED_SHUSH_BLOCK.get(), ShushRegistry.ADVANCED_SHUSH_BLOCK.get()));
 
 	public static final Supplier<CreativeModeTab> SHUSH_TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
 			.icon(() -> new ItemStack(ShushRegistry.SHUSH_BLOCK.get()))

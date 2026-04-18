@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mrbysco.shush.block.blockentity.ShushBlockEntity;
-import com.mrbysco.shush.client.ShushCache;
 import com.mrbysco.shush.registry.ShushRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -57,19 +56,11 @@ public class ShushBlock extends BaseEntityBlock {
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createShushTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends ShushBlockEntity> blockEntityType1) {
-		return level.isClientSide ? createTickerHelper(blockEntityType, blockEntityType1, ShushBlockEntity::clientTick) : null;
+		return level.isClientSide() ? createTickerHelper(blockEntityType, blockEntityType1, ShushBlockEntity::clientTick) : null;
 	}
 
 	@Override
 	protected RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
-	}
-
-	@Override
-	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-		super.onRemove(state, level, pos, newState, movedByPiston);
-		if (level.isClientSide) {
-			ShushCache.removeShushBlock(level, pos);
-		}
 	}
 }

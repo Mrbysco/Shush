@@ -1,7 +1,7 @@
-// 1.21.1	2026-04-18T20:24:41.6673258	Recipes
+// 26.1.2	2026-04-18T21:33:21.8913905	Shush Recipes
 846c564079d4546cec25680e6eac88dc8a1365bf data/shush/advancement/recipes/misc/advanced_shush_block.json
 768e84d38be4f6575b0454d9a03ee4c6a188c6c1 data/shush/advancement/recipes/misc/filtered_shush_block.json
 6e53f5dabbc59f1a2c606149f4c31da2c0f36e8a data/shush/advancement/recipes/misc/shush_block.json
-55815d9873f01f4ae21bf2060075f0daf1d85daa data/shush/recipe/advanced_shush_block.json
-640e7bcf712bccafbc1de4015ea56597b71a5b62 data/shush/recipe/filtered_shush_block.json
-a47ad7d083782cce280118bf138123829b012855 data/shush/recipe/shush_block.json
+e85ef5291c1801929bd4265a40c12ad32ca74087 data/shush/recipe/advanced_shush_block.json
+968eab8381790117543ce84584e5addb8b75ec4e data/shush/recipe/filtered_shush_block.json
+698394e41388725d5c67226563a04f6c933e1bec data/shush/recipe/shush_block.json

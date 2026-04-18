@@ -1,7 +1,7 @@
 {
   "parent": "shush:block/template_shush_block",
-  "render_type": "minecraft:cutout",
   "textures": {
-    "type": "shush:block/type_weather"
+    "type": "shush:block/type_weather",
+    "base": "shush:block/filtered_shush_block"
   }
 }

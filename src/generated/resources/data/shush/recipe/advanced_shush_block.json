@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "shush:filtered_shush_block"
-    }
+    "F": "shush:filtered_shush_block"
   },
   "pattern": [
     "FFF",
@@ -12,7 +10,6 @@
     "FFF"
   ],
   "result": {
-    "count": 1,
     "id": "shush:advanced_shush_block"
   }
 }
