@@ -31,6 +31,10 @@ public class ShushBlock extends BaseEntityBlock {
 		this.advanced = advanced;
 	}
 
+	public ShushBlock(Properties properties) {
+		this(properties, false);
+	}
+
 	public boolean getAdvanced() {
 		return this.advanced;
 	}

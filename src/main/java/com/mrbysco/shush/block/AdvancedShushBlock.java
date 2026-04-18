@@ -11,8 +11,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class AdvancedShushBlock extends ShushBlock {
 
-	public AdvancedShushBlock(Properties properties, boolean advanced) {
-		super(properties, advanced);
+	public AdvancedShushBlock(Properties properties) {
+		super(properties, true);
 	}
 
 	@Override

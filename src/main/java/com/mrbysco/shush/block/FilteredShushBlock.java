@@ -15,8 +15,8 @@ import net.minecraft.world.phys.BlockHitResult;
 public class FilteredShushBlock extends ShushBlock {
 	public static final EnumProperty<SourceType> SOURCE = EnumProperty.create("source", SourceType.class);
 
-	public FilteredShushBlock(Properties properties, boolean advanced) {
-		super(properties, advanced);
+	public FilteredShushBlock(Properties properties) {
+		super(properties, true);
 		this.registerDefaultState(this.defaultBlockState().setValue(SOURCE, SourceType.MASTER));
 	}
 
