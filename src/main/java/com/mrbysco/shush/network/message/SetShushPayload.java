@@ -20,7 +20,7 @@ public record SetShushPayload(GlobalPos globalPos,
 			ShushData.STREAM_CODEC, SetShushPayload::shushData,
 			SetShushPayload::new
 	);
-	public static final Type<SetShushPayload> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(ShushMod.MOD_ID, "set_shush_data"));
+	public static final Type<SetShushPayload> ID = new Type<>(ShushMod.modLoc("set_shush_data"));
 
 	private static List<SoundEvent> getSounds(List<ResourceLocation> soundIds) {
 		return soundIds.stream()
