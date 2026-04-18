@@ -1,1 +1,1 @@
-* Initial release
+* Update to 26.1.2
