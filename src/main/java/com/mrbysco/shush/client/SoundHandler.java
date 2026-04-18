@@ -34,7 +34,6 @@ public class SoundHandler {
 					float shushPercentage = Math.max(0.0F, 1.0F - shushedBy);
 					// Set the volume to the shush percentage
 					abstractSoundInstance.volume = oldVolume * shushPercentage;
-					ShushMod.LOGGER.info("{} {}", oldVolume, abstractSoundInstance.volume);
 					return abstractSoundInstance;
 				}
 			}
