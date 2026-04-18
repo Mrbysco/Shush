@@ -15,7 +15,9 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.neoforged.fml.loading.StringUtils;
+import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,6 +63,7 @@ public class ShushScreen extends Screen {
 	private boolean sorted = false;
 	private SortType sortType = SortType.NORMAL;
 
+	private ExtendedSlider shushSlider;
 	private float shushAmount = 0.0F;
 	private final List<ResourceLocation> selectedSounds = new ArrayList<>();
 
@@ -106,7 +109,7 @@ public class ShushScreen extends Screen {
 
 		this.addRenderableWidget(this.saveButton = Button.builder(Component.translatable("shush.screen.selection.save"), b -> {
 			if (selected != null) {
-				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds));
+				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp((float)shushSlider.getValue(), 0.1F, 1.0F)));
 			}
 
 			if (this.minecraft.player != null && selected != null)
@@ -138,7 +141,7 @@ public class ShushScreen extends Screen {
 		addWidget(soundsWidget);
 
 		final int width = listWidth / numButtons;
-		int x = centerWidth + PADDING - width;
+		int x = this.width - 80 + PADDING - width;
 		addRenderableWidget(SortType.A_TO_Z.button = Button.builder(SortType.A_TO_Z.getButtonText(), b ->
 						resortSounds(SortType.A_TO_Z))
 				.bounds(x, PADDING, width - buttonMargin, 20).build());
@@ -148,6 +151,10 @@ public class ShushScreen extends Screen {
 				.bounds(x, PADDING, width - buttonMargin, 20).build());
 
 		resortSounds(SortType.A_TO_Z);
+		shushSlider = new ExtendedSlider(10, PADDING, 100, 20,
+				Component.literal("Shush "), Component.empty(),
+				0.1, 1.0, shushAmount, 0.1, 2, true);
+		addRenderableWidget(shushSlider);
 	}
 
 	@Override

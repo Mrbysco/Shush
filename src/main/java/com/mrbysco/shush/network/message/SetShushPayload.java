@@ -30,8 +30,8 @@ public record SetShushPayload(GlobalPos globalPos,
 				.toList();
 	}
 
-	public SetShushPayload(GlobalPos pos, List<ResourceLocation> soundIds) {
-		this(pos, new ShushData(0.1F, getSounds(soundIds)));
+	public SetShushPayload(GlobalPos pos, List<ResourceLocation> soundIds, float shushAmount) {
+		this(pos, new ShushData(shushAmount, getSounds(soundIds)));
 	}
 
 	@Override
