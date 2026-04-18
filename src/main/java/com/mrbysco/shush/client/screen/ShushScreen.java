@@ -109,7 +109,9 @@ public class ShushScreen extends Screen {
 
 		this.addRenderableWidget(this.saveButton = Button.builder(Component.translatable("shush.screen.selection.save"), b -> {
 			if (selected != null) {
-				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp((float)shushSlider.getValue(), 0.1F, 1.0F)));
+				int percentage = shushSlider.getValueInt();
+				float shush = percentage / 100.0F;
+				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp(shush, 0.1F, 1.0F)));
 			}
 
 			if (this.minecraft.player != null && selected != null)
@@ -152,8 +154,8 @@ public class ShushScreen extends Screen {
 
 		resortSounds(SortType.A_TO_Z);
 		shushSlider = new ExtendedSlider(10, PADDING, 100, 20,
-				Component.literal("Shush "), Component.empty(),
-				0.1, 1.0, shushAmount, 0.1, 2, true);
+				Component.translatable("shush.screen.shush_amount"), Component.empty(),
+				10, 100, shushAmount, 10, 2, true);
 		addRenderableWidget(shushSlider);
 	}
 

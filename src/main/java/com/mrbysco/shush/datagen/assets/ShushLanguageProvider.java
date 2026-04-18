@@ -25,6 +25,8 @@ public class ShushLanguageProvider extends LanguageProvider {
 
 		add("shush.screen.selection.saved", "Selection saved");
 
+		add("shush.screen.shush_amount", "Shush Amount: ");
+
 		addBlock(ShushRegistry.SHUSH_BLOCK, "Shush Block");
 		addBlock(ShushRegistry.FILTERED_SHUSH_BLOCK, "Filtered Shush Block");
 		addBlock(ShushRegistry.ADVANCED_SHUSH_BLOCK, "Advanced Shush Block");

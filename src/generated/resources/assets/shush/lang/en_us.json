@@ -10,5 +10,6 @@
   "shush.screen.selection.remove": "Un-select",
   "shush.screen.selection.save": "Save selection",
   "shush.screen.selection.saved": "Selection saved",
-  "shush.screen.selection.select": "Select"
+  "shush.screen.selection.select": "Select",
+  "shush.screen.shush_amount": "Shush Amount: "
 }
