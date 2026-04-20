@@ -1,5 +1,6 @@
 package com.mrbysco.shush.client.screen;
 
+import com.mrbysco.shush.ShushMod;
 import com.mrbysco.shush.client.screen.widget.SoundListWidget;
 import com.mrbysco.shush.network.message.SetShushPayload;
 import com.mrbysco.shush.util.ShushData;
@@ -126,8 +127,10 @@ public class ShushScreen extends Screen {
 		}).bounds(centerWidth - (closeButtonWidth / 2) + 4, y, closeButtonWidth / 2, 20).build());
 
 		this.addRenderableWidget(this.insertButton = Button.builder(Component.translatable("shush.screen.selection.select"), (button) -> {
-			selectedSounds.add(selected.getSoundLocation());
-			selected.setSelected(true);
+			if (selected != null) {
+				selectedSounds.add(selected.getSoundLocation());
+				selected.setSelected(true);
+			}
 		}).bounds(centerWidth + PADDING + 3, y, closeButtonWidth / 2, 20).build());
 
 		y -= 12 + PADDING;
@@ -161,8 +164,6 @@ public class ShushScreen extends Screen {
 
 	@Override
 	public void tick() {
-		soundsWidget.setSelected(selected);
-
 		if (!search.getValue().equals(lastFilterText)) {
 			reloadSounds();
 			sorted = false;
@@ -230,12 +231,26 @@ public class ShushScreen extends Screen {
 		return font;
 	}
 
-	public void setSelected(SoundListWidget.ListEntry entry) {
-		this.selected = entry == this.selected ? null : entry;
+	public void setSelected(SoundListWidget.ListEntry previousEntry, SoundListWidget.ListEntry entry) {
+		if (this.selected == previousEntry) {
+			this.selected = entry;
+		} else {
+			if (this.selected == null || entry != null) {
+				this.selected = entry;
+			}
+		}
 	}
 
 	public List<ResourceLocation> getSelectedSounds() {
 		return selectedSounds;
+	}
+
+	@Override
+	public boolean keyPressed(KeyEvent event) {
+		if (this.soundsWidget.keyPressed(event)) {
+			return true;
+		}
+		return super.keyPressed(event);
 	}
 
 	/**
@@ -244,10 +259,18 @@ public class ShushScreen extends Screen {
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		boolean flag = super.mouseClicked(mouseX, mouseY, button);
+		if (super.mouseClicked(mouseX, mouseY, button)) {
+			return true;
+		}
+
+		if (this.soundsWidget.mouseClicked(mouseX, mouseY, button)) {
+			return true;
+		}
 		if (button == 1 && search.isMouseOver(mouseX, mouseY)) {
 			search.setValue("");
+			return true;
 		}
-		return flag;
+		return false;
 	}
 
 	@Override
