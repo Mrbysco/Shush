@@ -1,1 +1,1 @@
-* Update to 26.1.2
+* Fix Advanced Shush Block screen displaying with no text
