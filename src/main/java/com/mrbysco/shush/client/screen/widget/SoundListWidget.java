@@ -5,7 +5,6 @@ import com.mrbysco.shush.client.screen.widget.SoundListWidget.ListEntry;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ObjectSelectionList;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -27,7 +26,7 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 
 	@Override
 	protected int scrollBarX() {
-		return this.listWidth;
+		return this.listWidth - 6;
 	}
 
 	@Override
@@ -39,6 +38,13 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 		this.clearEntries();
 		boolean skipCheck = selected == null || selected.isEmpty();
 		parent.buildSoundList(this::addEntry, location -> new ListEntry(location, this.parent, !skipCheck && selected.contains(location)));
+	}
+
+	@Override
+	public void setSelected(@Nullable SoundListWidget.ListEntry selected) {
+		if (selected == getSelected()) return;
+		this.parent.setSelected(getSelected(), selected);
+		super.setSelected(selected);
 	}
 
 	public class ListEntry extends Entry<ListEntry> {
@@ -62,16 +68,9 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 			int entryWidth = getWidth();
 			int entryHeight = getHeight();
 			graphics.text(font, Language.getInstance().getVisualOrder(FormattedText.composite(font.substrByWidth(name, listWidth))),
-					(this.parent.width / 2) - (font.width(structureName) / 2) + 3, top + 6, 0xFFFFFF, false);
+					(this.parent.width / 2) - (font.width(structureName) / 2) + 3, top + 6, 0xFFFFFFFF, false);
 			if (this.selected)
 				graphics.fill(left, top, left + entryWidth, top + entryHeight, 0x80FFFFFF);
-		}
-
-		@Override
-		public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-			parent.setSelected(this);
-			SoundListWidget.this.setSelected(this);
-			return false;
 		}
 
 		public Identifier getSoundLocation() {
