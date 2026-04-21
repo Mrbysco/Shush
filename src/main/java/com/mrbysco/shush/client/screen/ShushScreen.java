@@ -1,6 +1,5 @@
 package com.mrbysco.shush.client.screen;
 
-import com.mrbysco.shush.ShushMod;
 import com.mrbysco.shush.client.screen.widget.SoundListWidget;
 import com.mrbysco.shush.network.message.SetShushPayload;
 import com.mrbysco.shush.util.ShushData;
@@ -109,11 +108,9 @@ public class ShushScreen extends Screen {
 				.bounds(centerWidth - (closeButtonWidth / 2) + 4, y, closeButtonWidth / 2, 20).build());
 
 		this.addRenderableWidget(this.saveButton = Button.builder(Component.translatable("shush.screen.selection.save"), b -> {
-			if (selected != null) {
-				int percentage = shushSlider.getValueInt();
-				float shush = percentage / 100.0F;
-				PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp(shush, 0.1F, 1.0F)));
-			}
+			int percentage = shushSlider.getValueInt();
+			float shush = percentage / 100.0F;
+			PacketDistributor.sendToServer(new SetShushPayload(globalPos, selectedSounds, Mth.clamp(shush, 0.1F, 1.0F)));
 
 			if (this.minecraft.player != null && selected != null)
 				this.minecraft.player.sendSystemMessage(Component.translatable("shush.screen.selection.saved").withStyle(ChatFormatting.GOLD));
@@ -156,9 +153,10 @@ public class ShushScreen extends Screen {
 				.bounds(x, PADDING, width - buttonMargin, 20).build());
 
 		resortSounds(SortType.A_TO_Z);
+		int percentage = (int) (shushAmount * 100);
 		shushSlider = new ExtendedSlider(10, PADDING, 100, 20,
 				Component.translatable("shush.screen.shush_amount"), Component.empty(),
-				10, 100, shushAmount, 10, 2, true);
+				10, 100, percentage, 10, 2, true);
 		addRenderableWidget(shushSlider);
 	}
 
