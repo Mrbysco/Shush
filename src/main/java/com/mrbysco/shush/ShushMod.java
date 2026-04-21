@@ -1,7 +1,6 @@
 package com.mrbysco.shush;
 
 import com.mojang.logging.LogUtils;
-import com.mrbysco.shush.client.ClientHandler;
 import com.mrbysco.shush.client.SoundHandler;
 import com.mrbysco.shush.network.PacketHandler;
 import com.mrbysco.shush.registry.ShushRegistry;
@@ -29,8 +28,6 @@ public class ShushMod {
 
 		if (dist.isClient()) {
 			NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, SoundHandler::onSoundEvent);
-			NeoForge.EVENT_BUS.addListener(ClientHandler::onLevelTick);
-			NeoForge.EVENT_BUS.addListener(ClientHandler::onLevelUnload);
 		}
 	}
 
