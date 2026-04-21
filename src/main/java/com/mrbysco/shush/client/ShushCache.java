@@ -113,7 +113,7 @@ public class ShushCache {
 
 			if (mufflerDimension.equals(dimension) && mufflerBlockPos.closerThan(position, maxRange)) {
 				ShushData shushData = entry.getValue();
-				if (shushData != null && shushData.filteredSounds().stream().anyMatch(soundEvent -> soundEvent.location().equals(instance.getIdentifier()))) {
+				if (shushData != null && shushData.filteredSounds().stream().anyMatch(soundEvent -> soundEvent.getLocation().equals(instance.getLocation()))) {
 					count += (int)(shushData.shushAmount() * 10);
 				}
 			}

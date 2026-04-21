@@ -244,11 +244,11 @@ public class ShushScreen extends Screen {
 	}
 
 	@Override
-	public boolean keyPressed(KeyEvent event) {
-		if (this.soundsWidget.keyPressed(event)) {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		if (this.soundsWidget.keyPressed(keyCode, scanCode, modifiers)) {
 			return true;
 		}
-		return super.keyPressed(event);
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	/**

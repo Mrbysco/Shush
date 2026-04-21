@@ -69,13 +69,6 @@ public class SoundListWidget extends ObjectSelectionList<ListEntry> {
 				guiGraphics.fill(left, top, left + entryWidth, top + entryHeight, 0x80FFFFFF);
 		}
 
-		@Override
-		public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
-			parent.setSelected(this);
-			SoundListWidget.this.setSelected(this);
-			return false;
-		}
-
 		public ResourceLocation getSoundLocation() {
 			return soundLocation;
 		}
