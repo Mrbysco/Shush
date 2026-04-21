@@ -1,1 +1,1 @@
-* Fix Advanced Shush Block screen displaying with no text
+* Fix Advanced Shush block not working properly
