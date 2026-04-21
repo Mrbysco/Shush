@@ -46,8 +46,14 @@ public class ShushCache {
 					}
 				}
 			} else {
-				if (!ShushCache.ADVANCED_SHUSH_MAP.containsKey(globalPos))
+				if (ShushCache.ADVANCED_SHUSH_MAP.containsKey(globalPos)) {
+					ShushData existingData = ShushCache.ADVANCED_SHUSH_MAP.get(globalPos);
+					if (existingData == null || !existingData.equals(shushBlockEntity.getShushType())) {
+						ShushCache.ADVANCED_SHUSH_MAP.put(globalPos, shushBlockEntity.getShushType());
+					}
+				} else {
 					ShushCache.ADVANCED_SHUSH_MAP.put(globalPos, shushBlockEntity.getShushType());
+				}
 			}
 			// NOOP
 		}
@@ -59,8 +65,10 @@ public class ShushCache {
 		int globalShushCount = globalShushCount(dimension, position, maxRange);
 		//Check the filtered shush count
 		int typedShushCount = getTypedShushCount(dimension, position, instance.getSource(), maxRange);
+		//Check the advanced shush count
+		int advancedShushCount = getAdvancedShushCount(dimension, position, instance, maxRange);
 
-		int totalShushCount = globalShushCount + typedShushCount;
+		int totalShushCount = globalShushCount + typedShushCount + advancedShushCount;
 		if (totalShushCount > 0) {
 			shushBy += 0.1F * totalShushCount;
 		}
@@ -90,6 +98,23 @@ public class ShushCache {
 				SourceType shushData = entry.getValue();
 				if (shushData != null && sourceType == entry.getValue().getSource()) {
 					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	public static int getAdvancedShushCount(ResourceKey<Level> dimension, BlockPos position, AbstractSoundInstance instance, int maxRange) {
+		int count = 0;
+		for (Map.Entry<GlobalPos, ShushData> entry : ADVANCED_SHUSH_MAP.entrySet()) {
+			GlobalPos mufflerPos = entry.getKey();
+			BlockPos mufflerBlockPos = mufflerPos.pos();
+			ResourceKey<Level> mufflerDimension = mufflerPos.dimension();
+
+			if (mufflerDimension.equals(dimension) && mufflerBlockPos.closerThan(position, maxRange)) {
+				ShushData shushData = entry.getValue();
+				if (shushData != null && shushData.filteredSounds().stream().anyMatch(soundEvent -> soundEvent.location().equals(instance.getIdentifier()))) {
+					count += (int)(shushData.shushAmount() * 10);
 				}
 			}
 		}
