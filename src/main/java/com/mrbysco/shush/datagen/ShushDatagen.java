@@ -2,6 +2,7 @@ package com.mrbysco.shush.datagen;
 
 import com.mrbysco.shush.datagen.assets.ShushLanguageProvider;
 import com.mrbysco.shush.datagen.assets.ShushModelProvider;
+import com.mrbysco.shush.datagen.data.ShushLootProvider;
 import com.mrbysco.shush.datagen.data.ShushRecipeProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
@@ -21,6 +22,7 @@ public class ShushDatagen {
 		CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
 
 		generator.addProvider(true, new ShushRecipeProvider.Runner(packOutput, lookupProvider));
+		generator.addProvider(true, new ShushLootProvider(packOutput, lookupProvider));
 
 		generator.addProvider(true, new ShushLanguageProvider(packOutput));
 		generator.addProvider(true, new ShushModelProvider(packOutput));
