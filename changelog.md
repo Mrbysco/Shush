@@ -1,1 +1,1 @@
-* Fix Advanced Shush block not working properly
+* Add missing loottable to the shush blocks (You should be able to pick them back up now)
